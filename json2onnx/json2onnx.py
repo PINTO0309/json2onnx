@@ -87,12 +87,14 @@ def convert(
 def main():
     parser = ArgumentParser()
     parser.add_argument(
+        '-ij',
         '--input_json_path',
         type=str,
         required=True,
         help='Input JSON file path (*.json)'
     )
     parser.add_argument(
+        '-of',
         '--output_onnx_file_path',
         type=str,
         required=True,
