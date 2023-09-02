@@ -79,7 +79,12 @@ def convert(
     onnx_graph = Parse(onnx_str, onnx.ModelProto())
 
     if output_onnx_file_path:
-        onnx.save(onnx_graph, output_onnx_file_path)
+        try:
+            onnx.save(onnx_graph, output_onnx_file_path)
+        except ValueError as ve:
+            # If a file exceeds the 2 GB limit of the Protocol Buffer, the weight of the file is output to an external file.
+            # ValueError: Message onnx.ModelProto exceeds maximum protobuf size of 2GB: 3438550359
+            onnx.save(onnx_graph, output_onnx_file_path, save_as_external_data=True)
 
     return onnx_graph
 
